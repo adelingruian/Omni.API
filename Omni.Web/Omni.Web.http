@@ -22,7 +22,7 @@ POST {{Omni.Web_HostAddress}}/flights
 Content-Type: application/json
 
 {
-  "flightNumber": "RO622",
+  "flightNumber": "RO621",
   "aircraft": "YR-BGA",
   "origin": "OTP",
   "destination": "OMR",

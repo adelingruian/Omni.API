@@ -14,9 +14,12 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins("http://localhost:4200")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
+
+builder.Services.AddSignalR();
 
 // Register DbContext - use SQLite with connection string from configuration
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -50,5 +53,6 @@ app.UseCors("LocalAngular");
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<Omni.Web.Hubs.FlightsHub>(Omni.Web.Hubs.FlightsHub.HubPath);
 
 app.Run();

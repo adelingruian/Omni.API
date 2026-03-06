@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Omni.Web.Data;
+using Omni.Web.Hubs;
 using Omni.Web.Models;
 
 namespace Omni.Web.Controllers
@@ -9,10 +12,12 @@ namespace Omni.Web.Controllers
     public class FlightsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IHubContext<FlightsHub> _hubContext;
 
-        public FlightsController(AppDbContext context, ILogger<FlightsController> logger)
+        public FlightsController(AppDbContext context, IHubContext<FlightsHub> hubContext, ILogger<FlightsController> logger)
         {
             _context = context;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -34,6 +39,9 @@ namespace Omni.Web.Controllers
         {
             _context.Flights.Add(flight);
             await _context.SaveChangesAsync();
+
+            await BroadcastFlightsUpdated();
+
             return CreatedAtAction(nameof(Get), new { id = flight.FlightId }, flight);
         }
 
@@ -54,6 +62,8 @@ namespace Omni.Web.Controllers
                 throw;
             }
 
+            await BroadcastFlightsUpdated();
+
             return NoContent();
         }
 
@@ -66,7 +76,19 @@ namespace Omni.Web.Controllers
             _context.Flights.Remove(flight);
             await _context.SaveChangesAsync();
 
+            await BroadcastFlightsUpdated();
+
             return NoContent();
+        }
+
+        private async Task BroadcastFlightsUpdated()
+        {
+            var flights = await _context.Flights
+                .AsNoTracking()
+                .OrderBy(f => f.FlightId)
+                .ToListAsync();
+
+            await _hubContext.Clients.All.SendAsync(FlightsHub.FlightsUpdatedEvent, flights);
         }
     }
 }
