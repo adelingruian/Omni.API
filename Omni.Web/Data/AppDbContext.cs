@@ -9,5 +9,7 @@ namespace Omni.Web.Data
         }
 
         public DbSet<Flight> Flights { get; set; } = default!;
+        public DbSet<Disruption> Disruptions { get; set; } = default!;
+        public DbSet<Gate> Gates { get; set; } = default!;
     }
 }

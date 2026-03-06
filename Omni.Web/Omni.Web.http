@@ -30,7 +30,7 @@ Content-Type: application/json
   "actualDeparture": "2026-03-06T06:00:00Z",
   "scheduledArrival": "2026-03-06T07:00:00Z",
   "actualArrival": "2026-03-06T07:00:00Z",
-  "gate": "Gate 1",
+  "gate": "Gate 2",
   "runway": "19",
   "passengerNumber": 68,
   "delayMinutes": 0,
@@ -70,5 +70,33 @@ Content-Type: application/json
 
 ### Flights - delete
 DELETE {{Omni.Web_HostAddress}}/flights/1
+
+###
+
+### Gates - list all
+GET {{Omni.Web_HostAddress}}/gates
+Accept: application/json
+
+###
+
+### Disruptions - list all
+GET {{Omni.Web_HostAddress}}/disruptions
+Accept: application/json
+
+###
+
+### Disruptions - create
+POST {{Omni.Web_HostAddress}}/disruptions
+Content-Type: application/json
+
+{
+  "resourceType": "Gate",
+  "resourceId": "Gate 1"
+}
+
+###
+
+### Disruptions - solve
+POST {{Omni.Web_HostAddress}}/disruptions/1/solve
 
 ###
