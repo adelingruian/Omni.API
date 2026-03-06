@@ -1,0 +1,39 @@
+﻿var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+
+// If your "agent" is a background worker (inherits BackgroundService or implements IHostedService),
+// register it here. Example (uncomment and replace with your type/namespace):
+// using YourAgentNamespace;
+// builder.Services.AddHostedService<MyAgent>();
+
+// If your agent is a regular injectable service (implements an interface IAgent):
+// builder.Services.AddSingleton<IAgent, MyAgent>(); // or AddScoped / AddTransient as appropriate
+
+// If the agent source file lives outside this project (e.g. in the parent .github folder),
+// you can include it in the project by editing the Omni.Web.csproj and adding a Compile include:
+// <ItemGroup>
+//   <Compile Include="..\..\.github\path\to\MyAgent.cs" Link="External\MyAgent.cs" />
+// </ItemGroup>
+// Replace the path above to match the actual location. After including the file in the project,
+// register the service as shown earlier.
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

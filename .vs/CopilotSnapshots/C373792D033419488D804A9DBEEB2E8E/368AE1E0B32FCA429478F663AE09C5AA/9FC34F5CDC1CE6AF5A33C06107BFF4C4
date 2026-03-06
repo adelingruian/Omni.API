@@ -1,0 +1,68 @@
+﻿@Omni.Web_HostAddress = http://localhost:5167
+
+GET {{Omni.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+### Flights - list all
+GET {{Omni.Web_HostAddress}}/flights
+Accept: application/json
+
+###
+
+### Flights - get by id
+GET {{Omni.Web_HostAddress}}/flights/1
+Accept: application/json
+
+###
+
+### Flights - create
+POST {{Omni.Web_HostAddress}}/flights
+Content-Type: application/json
+
+{
+  "flightNumber": "OM123",
+  "aircraftId": 1,
+  "gateId": 5,
+  "crewId": 2,
+  "scheduledArrival": "2026-03-06T10:00:00Z",
+  "scheduledDeparture": "2026-03-06T11:00:00Z",
+  "estimatedArrival": null,
+  "estimatedDeparture": null,
+  "actualArrival": null,
+  "actualDeparture": null,
+  "turnaroundDuration": null,
+  "status": "Scheduled",
+  "delayMinutes": 0
+}
+
+###
+
+### Flights - update (replace)
+PUT {{Omni.Web_HostAddress}}/flights/1
+Content-Type: application/json
+
+{
+  "flightId": 1,
+  "flightNumber": "OM123",
+  "aircraftId": 1,
+  "gateId": 6,
+  "crewId": 2,
+  "scheduledArrival": "2026-03-06T10:00:00Z",
+  "scheduledDeparture": "2026-03-06T11:00:00Z",
+  "estimatedArrival": "2026-03-06T10:15:00Z",
+  "estimatedDeparture": "2026-03-06T11:15:00Z",
+  "actualArrival": null,
+  "actualDeparture": null,
+  "turnaroundDuration": null,
+  "status": "Delayed",
+  "delayMinutes": 15
+}
+
+###
+
+### Flights - delete
+DELETE {{Omni.Web_HostAddress}}/flights/1
+
+###
