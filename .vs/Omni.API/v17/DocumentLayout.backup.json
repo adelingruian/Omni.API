@@ -3,20 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|c:\\users\\adelin\\documents\\gitrepositories\\omni\\omni.api\\omni.web\\omni.web.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|solutionrelative:omni.web\\omni.web.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+      "AbsoluteMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|c:\\users\\adelin\\documents\\gitrepositories\\omni\\omni.api\\omni.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|solutionrelative:omni.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|c:\\users\\adelin\\documents\\gitrepositories\\omni\\omni.api\\omni.web\\controllers\\flightscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|solutionrelative:omni.web\\controllers\\flightscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|c:\\users\\adelin\\documents\\gitrepositories\\omni\\omni.api\\omni.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|solutionrelative:omni.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|c:\\users\\adelin\\documents\\gitrepositories\\omni\\omni.api\\omni.web\\omni.web.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|solutionrelative:omni.web\\omni.web.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|c:\\users\\adelin\\documents\\gitrepositories\\omni\\omni.api\\omni.web\\models\\flight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|solutionrelative:omni.web\\models\\flight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|c:\\users\\adelin\\documents\\gitrepositories\\omni\\omni.api\\omni.web\\appsettings.json||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|solutionrelative:omni.web\\appsettings.json||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|c:\\users\\adelin\\documents\\gitrepositories\\omni\\omni.api\\omni.web\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|solutionrelative:omni.web\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|c:\\users\\adelin\\documents\\gitrepositories\\omni\\omni.api\\omni.web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -31,10 +39,6 @@
       "RelativeMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|solutionrelative:omni.web\\omni.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|c:\\users\\adelin\\documents\\gitrepositories\\omni\\omni.api\\omni.web\\models\\flight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|solutionrelative:omni.web\\models\\flight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|c:\\users\\adelin\\documents\\gitrepositories\\omni\\omni.api\\omni.web\\omni.web.http||{3B902123-F8A7-4915-9F01-361F908088D0}|",
       "RelativeMoniker": "D:0:0:{B1ADE416-69CC-4A0B-BDBA-DA4BAA48554A}|Omni.Web\\Omni.Web.csproj|solutionrelative:omni.web\\omni.web.http||{3B902123-F8A7-4915-9F01-361F908088D0}|"
     }
@@ -46,36 +50,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Omni.Web.http",
-              "DocumentMoniker": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Omni.Web.http",
-              "RelativeDocumentMoniker": "Omni.Web\\Omni.Web.http",
-              "ToolTip": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Omni.Web.http",
-              "RelativeToolTip": "Omni.Web\\Omni.Web.http",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2026-03-06T17:23:38.531Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Omni.Web.http",
-              "DocumentMoniker": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Omni.Web.http",
-              "RelativeDocumentMoniker": "Omni.Web\\Omni.Web.http",
-              "ToolTip": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Omni.Web.http",
-              "RelativeToolTip": "Omni.Web\\Omni.Web.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2026-03-06T17:15:26.598Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Omni.Web.http",
+              "DocumentMoniker": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Omni.Web.http",
+              "RelativeDocumentMoniker": "Omni.Web\\Omni.Web.http",
+              "ToolTip": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Omni.Web.http",
+              "RelativeToolTip": "Omni.Web\\Omni.Web.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2026-03-06T17:15:26.598Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -85,35 +77,22 @@
               "RelativeDocumentMoniker": "Omni.Web\\Controllers\\FlightsController.cs",
               "ToolTip": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Controllers\\FlightsController.cs",
               "RelativeToolTip": "Omni.Web\\Controllers\\FlightsController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAACMAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAswBQAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-06T17:22:39.275Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Program.cs",
               "RelativeDocumentMoniker": "Omni.Web\\Program.cs",
               "ToolTip": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Program.cs",
               "RelativeToolTip": "Omni.Web\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA6AAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABoAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-06T17:22:23.832Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\appsettings.json",
-              "RelativeDocumentMoniker": "Omni.Web\\appsettings.json",
-              "ToolTip": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\appsettings.json",
-              "RelativeToolTip": "Omni.Web\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-03-06T17:22:20.401Z",
               "EditorCaption": ""
             },
             {
@@ -126,12 +105,24 @@
               "RelativeToolTip": "Omni.Web\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-03-06T17:22:17.935Z",
+              "WhenOpened": "2026-03-06T17:22:20.401Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\appsettings.json",
+              "RelativeDocumentMoniker": "Omni.Web\\appsettings.json",
+              "ToolTip": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\appsettings.json",
+              "RelativeToolTip": "Omni.Web\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-06T17:22:17.935Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": ".gitignore",
               "DocumentMoniker": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\.gitignore",
               "RelativeDocumentMoniker": ".gitignore",
@@ -139,34 +130,57 @@
               "RelativeToolTip": ".gitignore",
               "ViewState": "AgIAAF8BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-03-06T17:21:29.471Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-06T17:21:29.471Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Omni.Web",
+              "DocumentIndex": 8,
+              "Title": "Omni.Web.csproj",
               "DocumentMoniker": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Omni.Web.csproj",
               "RelativeDocumentMoniker": "Omni.Web\\Omni.Web.csproj",
               "ToolTip": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Omni.Web.csproj",
               "RelativeToolTip": "Omni.Web\\Omni.Web.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-03-06T17:20:54.637Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-06T17:20:54.637Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 3,
               "Title": "Flight.cs",
               "DocumentMoniker": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Models\\Flight.cs",
               "RelativeDocumentMoniker": "Omni.Web\\Models\\Flight.cs",
               "ToolTip": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Models\\Flight.cs",
               "RelativeToolTip": "Omni.Web\\Models\\Flight.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAgwAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-06T17:12:39.2Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Omni.Web.http",
+              "DocumentMoniker": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Omni.Web.http",
+              "RelativeDocumentMoniker": "Omni.Web\\Omni.Web.http",
+              "ToolTip": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Omni.Web.http",
+              "RelativeToolTip": "Omni.Web\\Omni.Web.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2026-03-06T17:23:38.531Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Omni.Web\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\Adelin\\Documents\\GitRepositories\\Omni\\Omni.API\\Omni.Web\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Omni.Web\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T17:24:05.234Z"
             }
           ]
         }

@@ -17,11 +17,11 @@ builder.Services.AddDbContext<Omni.Web.Data.AppDbContext>(options =>
 
 var app = builder.Build();
 
-// Ensure database is created (for development/demo scenarios). For production, use migrations.
+// Apply EF Core migrations on startup (dev/demo). This will create the DB if it doesn't exist.
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<Omni.Web.Data.AppDbContext>();
-    db.Database.EnsureCreated();
+    db.Database.Migrate();
 }
 
 // Configure the HTTP request pipeline.

@@ -22,19 +22,22 @@ POST {{Omni.Web_HostAddress}}/flights
 Content-Type: application/json
 
 {
-  "flightNumber": "OM123",
-  "aircraftId": 1,
-  "gateId": 5,
-  "crewId": 2,
-  "scheduledArrival": "2026-03-06T10:00:00Z",
-  "scheduledDeparture": "2026-03-06T11:00:00Z",
-  "estimatedArrival": null,
-  "estimatedDeparture": null,
-  "actualArrival": null,
-  "actualDeparture": null,
-  "turnaroundDuration": null,
-  "status": "Scheduled",
-  "delayMinutes": 0
+  "flightNumber": "RO622",
+  "aircraft": "YR-BGA",
+  "origin": "OTP",
+  "destination": "OMR",
+  "scheduledDeparture": "2026-03-06T06:00:00Z",
+  "actualDeparture": "2026-03-06T06:00:00Z",
+  "scheduledArrival": "2026-03-06T07:00:00Z",
+  "actualArrival": "2026-03-06T07:00:00Z",
+  "gate": "Gate 1",
+  "runway": "19",
+  "passengerNumber": 68,
+  "delayMinutes": 0,
+  "crewPilots": 2,
+  "crewFlightAttendants": 3,
+  "baggageConveyorBelt": "Carousel 1",
+  "baggageTotalChecked": 45
 }
 
 ###
@@ -45,19 +48,22 @@ Content-Type: application/json
 
 {
   "flightId": 1,
-  "flightNumber": "OM123",
-  "aircraftId": 1,
-  "gateId": 6,
-  "crewId": 2,
-  "scheduledArrival": "2026-03-06T10:00:00Z",
-  "scheduledDeparture": "2026-03-06T11:00:00Z",
-  "estimatedArrival": "2026-03-06T10:15:00Z",
-  "estimatedDeparture": "2026-03-06T11:15:00Z",
-  "actualArrival": null,
-  "actualDeparture": null,
-  "turnaroundDuration": null,
-  "status": "Delayed",
-  "delayMinutes": 15
+  "flightNumber": "RO621",
+  "aircraft": "YR-BGA",
+  "origin": "OTP",
+  "destination": "OMR",
+  "scheduledDeparture": "2026-03-06T06:00:00Z",
+  "actualDeparture": "2026-03-06T06:05:00Z",
+  "scheduledArrival": "2026-03-06T07:00:00Z",
+  "actualArrival": "2026-03-06T07:05:00Z",
+  "gate": "Gate 1",
+  "runway": "19",
+  "passengerNumber": 68,
+  "delayMinutes": 5,
+  "crewPilots": 2,
+  "crewFlightAttendants": 3,
+  "baggageConveyorBelt": "Carousel 1",
+  "baggageTotalChecked": 45
 }
 
 ###

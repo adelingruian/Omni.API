@@ -5,29 +5,33 @@ namespace Omni.Web.Models
         // Primary key
         public int FlightId { get; set; }
 
-        // Identifiers
         public string FlightNumber { get; set; } = default!;
-        public int AircraftId { get; set; }
-        public int GateId { get; set; }
-        public int CrewId { get; set; }
 
-        // Scheduled times (planned)
-        public DateTimeOffset ScheduledArrival { get; set; }
+        // Equipment / routing
+        public string Aircraft { get; set; } = default!;
+        public string Origin { get; set; } = default!;
+        public string Destination { get; set; } = default!;
+
+        // Times
         public DateTimeOffset ScheduledDeparture { get; set; }
-
-        // Estimated times (predictions)
-        public DateTimeOffset? EstimatedArrival { get; set; }
-        public DateTimeOffset? EstimatedDeparture { get; set; }
-
-        // Actual times (observed)
-        public DateTimeOffset? ActualArrival { get; set; }
         public DateTimeOffset? ActualDeparture { get; set; }
+        public DateTimeOffset ScheduledArrival { get; set; }
+        public DateTimeOffset? ActualArrival { get; set; }
 
-        // Operational fields
-        public TimeSpan? TurnaroundDuration { get; set; }
+        // Airport resources
+        public string Gate { get; set; } = default!;
+        public string Runway { get; set; } = default!;
 
-        // Status and delay information
-        public string Status { get; set; } = "Scheduled";
+        // Passengers / delay
+        public int PassengerNumber { get; set; }
         public int DelayMinutes { get; set; }
+
+        // Crew info
+        public int CrewPilots { get; set; }
+        public int CrewFlightAttendants { get; set; }
+
+        // Baggage
+        public string BaggageConveyorBelt { get; set; } = default!;
+        public int BaggageTotalChecked { get; set; }
     }
 }
