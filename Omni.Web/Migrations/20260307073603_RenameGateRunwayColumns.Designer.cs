@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Omni.Web.Data;
 
@@ -10,9 +11,11 @@ using Omni.Web.Data;
 namespace Omni.Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260307073603_RenameGateRunwayColumns")]
+    partial class RenameGateRunwayColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
@@ -26,8 +29,9 @@ namespace Omni.Web.Migrations
                     b.Property<DateTimeOffset>("EndsAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ResourceId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("ResourceId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ResourceType")
                         .IsRequired()
@@ -85,8 +89,9 @@ namespace Omni.Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("GateId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("GateId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Origin")
                         .IsRequired()
@@ -95,8 +100,9 @@ namespace Omni.Web.Migrations
                     b.Property<int>("PassengerNumber")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("RunwayId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("RunwayId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTimeOffset>("ScheduledArrival")
                         .HasColumnType("TEXT");

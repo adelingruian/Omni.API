@@ -11,6 +11,7 @@ namespace Omni.Web.Controllers
     public class DisruptionsController : ControllerBase
     {
         private const string GateResourceType = "Gate";
+        private const string RunwayResourceType = "Runway";
         private const string DisruptionStatusOpen = "Open";
 
         private readonly AppDbContext _context;
@@ -22,7 +23,7 @@ namespace Omni.Web.Controllers
             _hubContext = hubContext;
         }
 
-        public sealed record CreateDisruptionRequest(string ResourceType, string ResourceId);
+        public sealed record CreateDisruptionRequest(string ResourceType, int ResourceId);
 
         [HttpPost]
         public async Task<ActionResult<Disruption>> Create(CreateDisruptionRequest request)
@@ -72,75 +73,113 @@ namespace Omni.Web.Controllers
 
         private async Task BroadcastFlightsUpdated()
         {
-            var now = DateTimeOffset.UtcNow;
-
             var flights = await _context.Flights
                 .AsNoTracking()
                 .OrderBy(f => f.FlightId)
                 .ToListAsync();
 
+            var gatesById = await _context.Gates
+                .AsNoTracking()
+                .ToDictionaryAsync(g => g.GateId, g => g.Name);
+
+            var runwaysById = await _context.Runways
+                .AsNoTracking()
+                .ToDictionaryAsync(r => r.RunwayId, r => r.Name);
+
             var disruptedGates = await _context.Disruptions
                 .AsNoTracking()
-                .Where(d =>
-                    d.ResourceType == GateResourceType &&
-                    d.Status == DisruptionStatusOpen &&
-                    d.StartsAt <= now &&
-                    d.EndsAt >= now)
+                .Where(d => d.ResourceType == GateResourceType && d.Status == DisruptionStatusOpen)
                 .Select(d => d.ResourceId)
                 .Distinct()
                 .ToListAsync();
 
-            var disruptedSet = disruptedGates.ToHashSet(StringComparer.OrdinalIgnoreCase);
+            var disruptedRunways = await _context.Disruptions
+                .AsNoTracking()
+                .Where(d => d.ResourceType == RunwayResourceType && d.Status == DisruptionStatusOpen)
+                .Select(d => d.ResourceId)
+                .Distinct()
+                .ToListAsync();
+
+            var disruptedGateSet = disruptedGates.ToHashSet();
+            var disruptedRunwaySet = disruptedRunways.ToHashSet();
 
             static DateTimeOffset GetDeparture(Flight f) => f.ActualDeparture ?? f.ScheduledDeparture;
             static DateTimeOffset GetArrival(Flight f) => f.ActualArrival ?? f.ScheduledArrival;
 
-            var conflictMap = new Dictionary<int, string>();
-
-            foreach (var group in flights.GroupBy(f => f.Gate, StringComparer.OrdinalIgnoreCase))
+            static Dictionary<int, string> BuildConflictMap(IEnumerable<Flight> flights, Func<Flight, int> keySelector)
             {
-                var list = group
-                    .Select(f => new { Flight = f, Start = GetDeparture(f), End = GetArrival(f) })
-                    .OrderBy(x => x.Start)
-                    .ToList();
+                var map = new Dictionary<int, string>();
 
-                for (var i = 0; i < list.Count; i++)
+                foreach (var group in flights.GroupBy(keySelector))
                 {
-                    for (var j = i + 1; j < list.Count; j++)
+                    var list = group
+                        .Select(f => new { Flight = f, Start = GetDeparture(f), End = GetArrival(f) })
+                        .OrderBy(x => x.Start)
+                        .ToList();
+
+                    for (var i = 0; i < list.Count; i++)
                     {
-                        if (list[j].Start > list[i].End)
-                            break;
+                        for (var j = i + 1; j < list.Count; j++)
+                        {
+                            if (list[j].Start > list[i].End)
+                                break;
 
-                        var a = list[i];
-                        var b = list[j];
+                            var a = list[i];
+                            var b = list[j];
 
-                        var overlaps = a.Start <= b.End && b.Start <= a.End;
-                        if (!overlaps)
-                            continue;
+                            var overlaps = a.Start <= b.End && b.Start <= a.End;
+                            if (!overlaps)
+                                continue;
 
-                        conflictMap.TryAdd(a.Flight.FlightId, b.Flight.FlightNumber);
-                        conflictMap.TryAdd(b.Flight.FlightId, a.Flight.FlightNumber);
+                            map.TryAdd(a.Flight.FlightId, b.Flight.FlightNumber);
+                            map.TryAdd(b.Flight.FlightId, a.Flight.FlightNumber);
+                        }
                     }
                 }
+
+                return map;
             }
+
+            var gateConflictMap = BuildConflictMap(flights, f => f.GateId);
+            var runwayConflictMap = BuildConflictMap(flights, f => f.RunwayId);
 
             var payload = flights.Select(f =>
             {
-                var isGateUnavailable = disruptedSet.Contains(f.Gate);
-                var hasConflict = conflictMap.TryGetValue(f.FlightId, out var otherFlight);
+                var gateName = gatesById.TryGetValue(f.GateId, out var gn) ? gn : string.Empty;
+                var runwayName = runwaysById.TryGetValue(f.RunwayId, out var rn) ? rn : string.Empty;
 
-                var status = GateStatus.Ok;
-                string? description = null;
+                var isGateUnavailable = disruptedGateSet.Contains(f.GateId);
+                var hasGateConflict = gateConflictMap.TryGetValue(f.FlightId, out var otherGateFlight);
+
+                var gateStatus = GateStatus.Ok;
+                string? gateDescription = null;
 
                 if (isGateUnavailable)
                 {
-                    status = GateStatus.Unavailable;
-                    description = "Gate is unavailable";
+                    gateStatus = GateStatus.Unavailable;
+                    gateDescription = "Gate is unavailable";
                 }
-                else if (hasConflict)
+                else if (hasGateConflict)
                 {
-                    status = GateStatus.Conflict;
-                    description = $"Overlaps with {otherFlight}";
+                    gateStatus = GateStatus.Conflict;
+                    gateDescription = $"Overlaps with {otherGateFlight}";
+                }
+
+                var isRunwayUnavailable = disruptedRunwaySet.Contains(f.RunwayId);
+                var hasRunwayConflict = runwayConflictMap.TryGetValue(f.FlightId, out var otherRunwayFlight);
+
+                var runwayStatus = RunwayStatus.Ok;
+                string? runwayDescription = null;
+
+                if (isRunwayUnavailable)
+                {
+                    runwayStatus = RunwayStatus.Unavailable;
+                    runwayDescription = "Runway is unavailable";
+                }
+                else if (hasRunwayConflict)
+                {
+                    runwayStatus = RunwayStatus.Conflict;
+                    runwayDescription = $"Overlaps with {otherRunwayFlight}";
                 }
 
                 return new FlightResponse(
@@ -153,8 +192,8 @@ namespace Omni.Web.Controllers
                     f.ActualDeparture,
                     f.ScheduledArrival,
                     f.ActualArrival,
-                    new GateResponse(f.Gate, status, description),
-                    f.Runway,
+                    new GateResponse(f.GateId, gateName, gateStatus, gateDescription),
+                    new RunwayResponse(f.RunwayId, runwayName, runwayStatus, runwayDescription),
                     f.PassengerNumber,
                     f.DelayMinutes,
                     f.CrewPilots,

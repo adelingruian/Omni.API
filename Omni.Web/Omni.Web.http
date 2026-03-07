@@ -30,8 +30,8 @@ Content-Type: application/json
   "actualDeparture": "2026-03-06T06:00:00Z",
   "scheduledArrival": "2026-03-06T07:00:00Z",
   "actualArrival": "2026-03-06T07:00:00Z",
-  "gate": "Gate 2",
-  "runway": "19",
+  "gateId": 2,
+  "runwayId": 1,
   "passengerNumber": 68,
   "delayMinutes": 0,
   "crewPilots": 2,
@@ -56,8 +56,8 @@ Content-Type: application/json
   "actualDeparture": "2026-03-06T06:05:00Z",
   "scheduledArrival": "2026-03-06T07:00:00Z",
   "actualArrival": "2026-03-06T07:05:00Z",
-  "gate": "Gate 1",
-  "runway": "19",
+  "gateId": 1,
+  "runwayId": 1,
   "passengerNumber": 68,
   "delayMinutes": 5,
   "crewPilots": 2,
@@ -79,6 +79,12 @@ Accept: application/json
 
 ###
 
+### Runways - list all
+GET {{Omni.Web_HostAddress}}/runways
+Accept: application/json
+
+###
+
 ### Disruptions - list all
 GET {{Omni.Web_HostAddress}}/disruptions
 Accept: application/json
@@ -91,7 +97,7 @@ Content-Type: application/json
 
 {
   "resourceType": "Gate",
-  "resourceId": "Gate 1"
+  "resourceId": 1
 }
 
 ###

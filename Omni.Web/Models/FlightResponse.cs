@@ -1,6 +1,7 @@
 namespace Omni.Web.Models
 {
-    public sealed record GateResponse(string GateId, GateStatus Status, string? Description);
+    public sealed record GateResponse(int GateId, string Name, GateStatus Status, string? Description);
+    public sealed record RunwayResponse(int RunwayId, string Name, RunwayStatus Status, string? Description);
 
     public sealed record FlightResponse(
         int FlightId,
@@ -13,7 +14,7 @@ namespace Omni.Web.Models
         DateTimeOffset ScheduledArrival,
         DateTimeOffset? ActualArrival,
         GateResponse Gate,
-        string Runway,
+        RunwayResponse Runway,
         int PassengerNumber,
         int DelayMinutes,
         int CrewPilots,

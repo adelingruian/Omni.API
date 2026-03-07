@@ -18,9 +18,9 @@ namespace Omni.Web.Models
         public DateTimeOffset ScheduledArrival { get; set; }
         public DateTimeOffset? ActualArrival { get; set; }
 
-        // Airport resources
-        public string Gate { get; set; } = default!;
-        public string Runway { get; set; } = default!;
+        // Airport resources (DB ids)
+        public int GateId { get; set; }
+        public int RunwayId { get; set; }
 
         // Passengers / delay
         public int PassengerNumber { get; set; }
