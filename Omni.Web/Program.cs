@@ -24,7 +24,15 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddSignalR();
+builder.Services
+    .AddSignalR()
+    .AddJsonProtocol(options =>
+    {
+        // Ensure SignalR uses string enums too.
+        options.PayloadSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+    });
+
+builder.Services.AddScoped<Omni.Web.Services.IFlightsBroadcastService, Omni.Web.Services.FlightsBroadcastService>();
 
 // Register DbContext - use SQLite with connection string from configuration
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
