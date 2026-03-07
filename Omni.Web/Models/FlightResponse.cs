@@ -1,6 +1,6 @@
 namespace Omni.Web.Models
 {
-    public sealed record GateResponse(string GateId, string Status);
+    public sealed record GateResponse(string GateId, GateStatus Status, string? Description);
 
     public sealed record FlightResponse(
         int FlightId,

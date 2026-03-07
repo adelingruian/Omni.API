@@ -32,6 +32,7 @@ namespace Omni.Web.Controllers
                 .OrderBy(f => f.FlightId)
                 .ToListAsync();
 
+            // Gates blocked by disruptions => Unavailable.
             var disruptedGates = await _context.Disruptions
                 .AsNoTracking()
                 .Where(d =>
@@ -43,7 +44,45 @@ namespace Omni.Web.Controllers
 
             var disruptedSet = disruptedGates.ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-            return flights.Select(f => ToResponse(f, disruptedSet.Contains(f.Gate))).ToList();
+            // Detect overlapping flights per gate => Conflict.
+            // Overlap rule: [departure, arrival] intersects with another flight's interval.
+            static DateTimeOffset GetDeparture(Flight f) => f.ActualDeparture ?? f.ScheduledDeparture;
+            static DateTimeOffset GetArrival(Flight f) => f.ActualArrival ?? f.ScheduledArrival;
+
+            var conflictMap = new Dictionary<int, string>(); // flightId -> other flight number
+
+            foreach (var group in flights.GroupBy(f => f.Gate, StringComparer.OrdinalIgnoreCase))
+            {
+                var list = group
+                    .Select(f => new { Flight = f, Start = GetDeparture(f), End = GetArrival(f) })
+                    .OrderBy(x => x.Start)
+                    .ToList();
+
+                for (var i = 0; i < list.Count; i++)
+                {
+                    for (var j = i + 1; j < list.Count; j++)
+                    {
+                        // Since list is ordered by Start, once the next Start is after current End, no further overlaps for i.
+                        if (list[j].Start > list[i].End)
+                            break;
+
+                        var a = list[i];
+                        var b = list[j];
+                        var overlaps = a.Start <= b.End && b.Start <= a.End;
+                        if (!overlaps)
+                            continue;
+
+                        conflictMap.TryAdd(a.Flight.FlightId, b.Flight.FlightNumber);
+                        conflictMap.TryAdd(b.Flight.FlightId, a.Flight.FlightNumber);
+                    }
+                }
+            }
+
+            return flights.Select(f => ToResponse(
+                    f,
+                    disruptedSet.Contains(f.Gate),
+                    conflictMap.TryGetValue(f.FlightId, out var otherFlightNumber) ? otherFlightNumber : null))
+                .ToList();
         }
 
         [HttpGet("{id:int}")]
@@ -57,7 +96,7 @@ namespace Omni.Web.Controllers
 
             if (flight == null) return NotFound();
 
-            var isGateDisrupted = await _context.Disruptions
+            var isGateUnavailable = await _context.Disruptions
                 .AsNoTracking()
                 .AnyAsync(d =>
                     d.ResourceType == GateResourceType &&
@@ -66,7 +105,23 @@ namespace Omni.Web.Controllers
                     d.StartsAt <= now &&
                     d.EndsAt >= now);
 
-            return ToResponse(flight, isGateDisrupted);
+            // Best-effort conflict check for a single flight by pulling same-gate flights.
+            var sameGateFlights = await _context.Flights
+                .AsNoTracking()
+                .Where(f => f.Gate == flight.Gate && f.FlightId != id)
+                .ToListAsync();
+
+            static DateTimeOffset GetDeparture(Flight f) => f.ActualDeparture ?? f.ScheduledDeparture;
+            static DateTimeOffset GetArrival(Flight f) => f.ActualArrival ?? f.ScheduledArrival;
+
+            var thisStart = GetDeparture(flight);
+            var thisEnd = GetArrival(flight);
+
+            var overlapping = sameGateFlights
+                .Select(f => new { f.FlightNumber, Start = GetDeparture(f), End = GetArrival(f) })
+                .FirstOrDefault(x => thisStart <= x.End && x.Start <= thisEnd);
+
+            return ToResponse(flight, isGateUnavailable, overlapping?.FlightNumber);
         }
 
         [HttpPost]
@@ -116,8 +171,22 @@ namespace Omni.Web.Controllers
             return NoContent();
         }
 
-        private static FlightResponse ToResponse(Flight f, bool isGateDisrupted)
+        private static FlightResponse ToResponse(Flight f, bool isGateUnavailable, string? overlappingFlightNumber)
         {
+            var status = GateStatus.Ok;
+            string? description = null;
+
+            if (isGateUnavailable)
+            {
+                status = GateStatus.Unavailable;
+                description = "Gate is unavailable";
+            }
+            else if (!string.IsNullOrWhiteSpace(overlappingFlightNumber))
+            {
+                status = GateStatus.Conflict;
+                description = $"Overlaps with {overlappingFlightNumber}";
+            }
+
             return new FlightResponse(
                 f.FlightId,
                 f.FlightNumber,
@@ -128,7 +197,7 @@ namespace Omni.Web.Controllers
                 f.ActualDeparture,
                 f.ScheduledArrival,
                 f.ActualArrival,
-                new GateResponse(f.Gate, isGateDisrupted ? "Disrupted" : "Ok"),
+                new GateResponse(f.Gate, status, description),
                 f.Runway,
                 f.PassengerNumber,
                 f.DelayMinutes,
@@ -140,34 +209,12 @@ namespace Omni.Web.Controllers
 
         private async Task BroadcastFlightsUpdated()
         {
-            var now = DateTimeOffset.UtcNow;
-
-            var flights = await _context.Flights
-                .AsNoTracking()
-                .OrderBy(f => f.FlightId)
-                .ToListAsync();
-
-            var gateIds = flights
-                .Select(f => f.Gate)
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .ToList();
-
-            var disruptedGates = await _context.Disruptions
-                .AsNoTracking()
-                .Where(d =>
-                    d.ResourceType == GateResourceType &&
-                    gateIds.Contains(d.ResourceId) &&
-                    d.Status == DisruptionStatusOpen &&
-                    d.StartsAt <= now &&
-                    d.EndsAt >= now)
-                .Select(d => d.ResourceId)
-                .Distinct()
-                .ToListAsync();
-
-            var disruptedSet = disruptedGates.ToHashSet(StringComparer.OrdinalIgnoreCase);
-            var payload = flights.Select(f => ToResponse(f, disruptedSet.Contains(f.Gate))).ToList();
-
-            await _hubContext.Clients.All.SendAsync(FlightsHub.FlightsUpdatedEvent, payload);
+            // Reuse the GET logic so sockets and HTTP match.
+            var result = await GetAll();
+            if (result.Result is ObjectResult obj && obj.Value is IEnumerable<FlightResponse> payload)
+            {
+                await _hubContext.Clients.All.SendAsync(FlightsHub.FlightsUpdatedEvent, payload);
+            }
         }
     }
 }
