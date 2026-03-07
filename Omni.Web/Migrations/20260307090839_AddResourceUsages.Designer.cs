@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Omni.Web.Data;
 
@@ -10,27 +11,14 @@ using Omni.Web.Data;
 namespace Omni.Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260307090839_AddResourceUsages")]
+    partial class AddResourceUsages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
-
-            modelBuilder.Entity("Omni.Web.Models.BaggageConveyorBelt", b =>
-                {
-                    b.Property<int>("BaggageConveyorBeltId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("BaggageConveyorBeltId");
-
-                    b.ToTable("BaggageConveyorBelts");
-                });
 
             modelBuilder.Entity("Omni.Web.Models.Disruption", b =>
                 {
@@ -38,7 +26,7 @@ namespace Omni.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("EndsAt")
+                    b.Property<DateTime>("EndsAt")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ResourceId")
@@ -49,6 +37,10 @@ namespace Omni.Web.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("StartsAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("DisruptionId");
@@ -72,10 +64,14 @@ namespace Omni.Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("BaggageConveyorBeltId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("BaggageConveyorBelt")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("BaggageTotalChecked")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DelayMinutes")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Destination")
@@ -145,6 +141,10 @@ namespace Omni.Web.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("StartsAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("ResourceUsageId");

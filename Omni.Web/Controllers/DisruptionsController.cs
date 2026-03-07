@@ -9,8 +9,6 @@ namespace Omni.Web.Controllers
     [Route("[controller]")]
     public class DisruptionsController : ControllerBase
     {
-        private const string DisruptionStatusOpen = "Open";
-
         private readonly AppDbContext _context;
         private readonly IFlightsBroadcastService _broadcast;
 
@@ -20,20 +18,19 @@ namespace Omni.Web.Controllers
             _broadcast = broadcast;
         }
 
-        public sealed record CreateDisruptionRequest(string ResourceType, int ResourceId);
+        public sealed record CreateDisruptionRequest(string ResourceType, int ResourceId, DateTime? StartsAt, DateTime? EndsAt);
 
         [HttpPost]
         public async Task<ActionResult<Disruption>> Create(CreateDisruptionRequest request)
         {
-            var todayUtc = DateTimeOffset.UtcNow.Date;
+            var now = DateTime.Now;
 
             var disruption = new Disruption
             {
                 ResourceType = request.ResourceType,
                 ResourceId = request.ResourceId,
-                StartsAt = todayUtc,
-                EndsAt = todayUtc.AddDays(1),
-                Status = DisruptionStatusOpen
+                StartsAt = request.StartsAt ?? now,
+                EndsAt = request.EndsAt
             };
 
             _context.Disruptions.Add(disruption);
@@ -60,7 +57,7 @@ namespace Omni.Web.Controllers
             var disruption = await _context.Disruptions.FindAsync(id);
             if (disruption == null) return NotFound();
 
-            disruption.Status = "Solved";
+            disruption.EndsAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
 
             await _broadcast.BroadcastFlightsUpdatedAsync(HttpContext.RequestAborted);

@@ -12,26 +12,21 @@ namespace Omni.Web.Models
         public string Origin { get; set; } = default!;
         public string Destination { get; set; } = default!;
 
-        // Times
-        public DateTimeOffset ScheduledDeparture { get; set; }
-        public DateTimeOffset? ActualDeparture { get; set; }
-        public DateTimeOffset ScheduledArrival { get; set; }
-        public DateTimeOffset? ActualArrival { get; set; }
+        // Times (all optional)
+        public DateTime? ScheduledDeparture { get; set; }
+        public DateTime? ActualDeparture { get; set; }
+        public DateTime? ScheduledArrival { get; set; }
+        public DateTime? ActualArrival { get; set; }
 
         // Airport resources (DB ids)
         public int GateId { get; set; }
         public int RunwayId { get; set; }
+        public int BaggageConveyorBeltId { get; set; }
 
-        // Passengers / delay
+        // Passengers
         public int PassengerNumber { get; set; }
-        public int DelayMinutes { get; set; }
-
-        // Crew info
-        public int CrewPilots { get; set; }
-        public int CrewFlightAttendants { get; set; }
 
         // Baggage
-        public string BaggageConveyorBelt { get; set; } = default!;
         public int BaggageTotalChecked { get; set; }
     }
 }

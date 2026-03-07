@@ -10,7 +10,9 @@ namespace Omni.Web.Data
 
         public DbSet<Flight> Flights { get; set; } = default!;
         public DbSet<Disruption> Disruptions { get; set; } = default!;
+        public DbSet<ResourceUsage> ResourceUsages { get; set; } = default!;
         public DbSet<Gate> Gates { get; set; } = default!;
         public DbSet<Runway> Runways { get; set; } = default!;
+        public DbSet<BaggageConveyorBelt> BaggageConveyorBelts { get; set; } = default!;
     }
 }

@@ -32,11 +32,8 @@ Content-Type: application/json
   "actualArrival": "2026-03-06T07:00:00Z",
   "gateId": 2,
   "runwayId": 1,
+  "baggageConveyorBeltId": 1,
   "passengerNumber": 68,
-  "delayMinutes": 0,
-  "crewPilots": 2,
-  "crewFlightAttendants": 3,
-  "baggageConveyorBelt": "Carousel 1",
   "baggageTotalChecked": 45
 }
 
@@ -58,11 +55,8 @@ Content-Type: application/json
   "actualArrival": "2026-03-06T07:05:00Z",
   "gateId": 1,
   "runwayId": 1,
+  "baggageConveyorBeltId": 1,
   "passengerNumber": 68,
-  "delayMinutes": 5,
-  "crewPilots": 2,
-  "crewFlightAttendants": 3,
-  "baggageConveyorBelt": "Carousel 1",
   "baggageTotalChecked": 45
 }
 
@@ -81,6 +75,12 @@ Accept: application/json
 
 ### Runways - list all
 GET {{Omni.Web_HostAddress}}/runways
+Accept: application/json
+
+###
+
+### Baggage Conveyor Belts - list all
+GET {{Omni.Web_HostAddress}}/baggageconveyorbelts
 Accept: application/json
 
 ###

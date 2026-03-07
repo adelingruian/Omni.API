@@ -11,11 +11,17 @@ namespace Omni.Web.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IFlightsBroadcastService _broadcast;
+        private readonly IResourceUsageService _usage;
 
-        public FlightsController(AppDbContext context, IFlightsBroadcastService broadcast, ILogger<FlightsController> logger)
+        public FlightsController(
+            AppDbContext context,
+            IFlightsBroadcastService broadcast,
+            IResourceUsageService usage,
+            ILogger<FlightsController> logger)
         {
             _context = context;
             _broadcast = broadcast;
+            _usage = usage;
         }
 
         [HttpGet]
@@ -28,7 +34,6 @@ namespace Omni.Web.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<FlightResponse>> Get(int id)
         {
-            // Keep it simple: build the same payload and pick the requested flight.
             var payload = await _broadcast.BuildFlightsPayloadAsync(HttpContext.RequestAborted);
             var flight = payload.FirstOrDefault(f => f.FlightId == id);
             if (flight is null) return NotFound();
@@ -38,13 +43,14 @@ namespace Omni.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<Flight>> Create(Flight flight)
         {
-            await ValidateGateAndRunwayExist(flight);
+            await ValidateGateRunwayAndBeltExist(flight);
             if (!ModelState.IsValid)
                 return ValidationProblem(ModelState);
 
             _context.Flights.Add(flight);
             await _context.SaveChangesAsync();
 
+            await _usage.UpsertForFlightAsync(flight, HttpContext.RequestAborted);
             await _broadcast.BroadcastFlightsUpdatedAsync(HttpContext.RequestAborted);
 
             return CreatedAtAction(nameof(Get), new { id = flight.FlightId }, flight);
@@ -55,7 +61,7 @@ namespace Omni.Web.Controllers
         {
             if (id != flight.FlightId) return BadRequest();
 
-            await ValidateGateAndRunwayExist(flight);
+            await ValidateGateRunwayAndBeltExist(flight);
             if (!ModelState.IsValid)
                 return ValidationProblem(ModelState);
 
@@ -71,6 +77,7 @@ namespace Omni.Web.Controllers
                 throw;
             }
 
+            await _usage.UpsertForFlightAsync(flight, HttpContext.RequestAborted);
             await _broadcast.BroadcastFlightsUpdatedAsync(HttpContext.RequestAborted);
 
             return NoContent();
@@ -85,18 +92,22 @@ namespace Omni.Web.Controllers
             _context.Flights.Remove(flight);
             await _context.SaveChangesAsync();
 
+            await _usage.DeleteForFlightAsync(id, HttpContext.RequestAborted);
             await _broadcast.BroadcastFlightsUpdatedAsync(HttpContext.RequestAborted);
 
             return NoContent();
         }
 
-        private async Task ValidateGateAndRunwayExist(Flight flight)
+        private async Task ValidateGateRunwayAndBeltExist(Flight flight)
         {
             if (!await _context.Gates.AsNoTracking().AnyAsync(g => g.GateId == flight.GateId))
                 ModelState.AddModelError(nameof(flight.GateId), $"Unknown gateId '{flight.GateId}'.");
 
             if (!await _context.Runways.AsNoTracking().AnyAsync(r => r.RunwayId == flight.RunwayId))
                 ModelState.AddModelError(nameof(flight.RunwayId), $"Unknown runwayId '{flight.RunwayId}'.");
+
+            if (!await _context.BaggageConveyorBelts.AsNoTracking().AnyAsync(b => b.BaggageConveyorBeltId == flight.BaggageConveyorBeltId))
+                ModelState.AddModelError(nameof(flight.BaggageConveyorBeltId), $"Unknown baggageConveyorBeltId '{flight.BaggageConveyorBeltId}'.");
         }
     }
 }
