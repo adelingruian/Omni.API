@@ -36,6 +36,11 @@ builder.Services.AddScoped<Omni.Web.Services.IFlightsBroadcastService, Omni.Web.
 builder.Services.AddScoped<Omni.Web.Services.IResourceUsageService, Omni.Web.Services.ResourceUsageService>();
 builder.Services.AddScoped<Omni.Web.Services.IFlightDelayService, Omni.Web.Services.FlightDelayService>();
 
+builder.Services.AddHttpClient<Omni.Web.Services.IOpenAiSuggestedActionService, Omni.Web.Services.OpenAiSuggestedActionService>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(360);
+});
+
 // Register DbContext - use SQLite with connection string from configuration
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<Omni.Web.Data.AppDbContext>(options =>

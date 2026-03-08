@@ -12,7 +12,9 @@ namespace Omni.Web.Controllers
         private readonly AppDbContext _context;
         private readonly IFlightsBroadcastService _broadcast;
 
-        public DisruptionsController(AppDbContext context, IFlightsBroadcastService broadcast)
+        public DisruptionsController(
+            AppDbContext context,
+            IFlightsBroadcastService broadcast)
         {
             _context = context;
             _broadcast = broadcast;

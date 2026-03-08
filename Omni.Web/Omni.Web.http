@@ -17,6 +17,12 @@ Accept: application/json
 
 ###
 
+### AI Suggested Actions - suggestions + tool calls
+GET {{Omni.Web_HostAddress}}/ai-suggested-actions
+Accept: application/json
+
+###
+
 ### Flights - create
 POST {{Omni.Web_HostAddress}}/flights
 Content-Type: application/json
@@ -91,13 +97,39 @@ Accept: application/json
 
 ###
 
-### Disruptions - create
+### Disruptions - create (Gate, starts now)
 POST {{Omni.Web_HostAddress}}/disruptions
 Content-Type: application/json
 
 {
   "resourceType": "Gate",
   "resourceId": 1
+}
+
+###
+
+### Disruptions - create (Runway, with explicit time window)
+POST {{Omni.Web_HostAddress}}/disruptions
+Content-Type: application/json
+
+{
+  "resourceType": "Runway",
+  "resourceId": 1,
+  "startsAt": "2026-03-07T06:30:00Z",
+  "endsAt": "2026-03-07T08:30:00Z"
+}
+
+###
+
+### Disruptions - create (Belt, with explicit time window)
+POST {{Omni.Web_HostAddress}}/disruptions
+Content-Type: application/json
+
+{
+  "resourceType": "BaggageConveyorBelt",
+  "resourceId": 1,
+  "startsAt": "2026-03-07T06:30:00Z",
+  "endsAt": "2026-03-07T08:30:00Z"
 }
 
 ###
